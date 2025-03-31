@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feeding | DairyFarm Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .sidebar {
+            min-height: calc(100vh - 4rem);
+        }
+    </style>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/feeding.js"></script>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="bg-blue-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-cow text-2xl"></i>
+                <span class="text-xl font-bold">DairyFarm Pro</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <i class="fas fa-bell text-xl cursor-pointer"></i>
+                    <span class="absolute -top-1 -right-1 bg-yellow-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                </div>
+                <div class="h-8 w-8 bg-gray-300 rounded-full"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white w-64 shadow-md p-4">
+            <div class="space-y-1">
+                <a href="dashboard.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="feeding.html" class="flex items-center space-x-2 p-2 bg-blue-100 rounded-lg text-blue-800">
+                    <i class="fas fa-utensils"></i>
+                    <span>Feeding</span>
+                </a>
+                <a href="vaccinations.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-syringe"></i>
+                    <span>Vaccinations</span>
+                </a>
+                <a href="history.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+                <a href="settings.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 p-8 bg-gray-50">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-blue-800">Feeding Records</h1>
+                <button id="newFeedingBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                    <i class="fas fa-plus mr-2"></i> New Feeding
+                </button>
+            </div>
+            
+            <!-- Feeding Form (hidden by default) -->
+            <div id="feedingForm" class="bg-white rounded-lg shadow-md p-6 mb-8 hidden">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">Record New Feeding</h2>
+                <form id="feedingRecordForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-1">Cattle ID</label>
+                            <select required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
+                                <option value="">Select Cattle</option>
+                                <option value="DF-0142">DF-0142 (Holstein)</option>
+                                <option value="DF-0038">DF-0038 (Jersey)</option>
+                                <option value="DF-0092">DF-0092 (Guernsey)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-1">Feed Type</label>
+                            <select required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
+                                <option value="">Select Feed Type</option>
+                                <option value="alfalfa">Alfalfa</option>
+                                <option value="corn_silage">Corn Silage</option>
+                                <option value="grass_hay">Grass Hay</option>
+                                <option value="grain_mix">Grain Mix</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-1">Quantity (kg)</label>
+                            <input type="number" min="0" step="0.5" required 
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-1">Time</label>
+                            <input type="time" required 
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-1">Notes</label>
+                        <textarea class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancelFeedingBtn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                            Cancel
+                        </button>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                            Save Feeding Record
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Feeding Schedule -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">Today's Feeding Schedule</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cattle Group</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feed Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">08:30</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Milking Cows</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Grain Mix</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Completed</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-blue-600 hover:text-blue-800 mr-3">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12:00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Calves</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Milk Replacer</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15L</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-blue-600 hover:text-blue-800 mr-3">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16:30</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Dry Cows</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Grass Hay</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">Scheduled</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-blue-600 hover:text-blue-800 mr-3">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Recent Feedings -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">Recent Feedings</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cattle ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feed Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recorded By</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Today, 08:30</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DF-0142</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Grain Mix</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5.5kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John D.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Yesterday, 16:45</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DF-0038</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Alfalfa</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sarah M.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Yesterday, 10:15</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">DF-0092</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Corn Silage</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John D.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
