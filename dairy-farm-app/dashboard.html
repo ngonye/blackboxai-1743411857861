@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | DairyFarm Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .sidebar {
+            min-height: calc(100vh - 4rem);
+        }
+        .dashboard-bg {
+            background-color: #f8fafc;
+            background-image: url("https://images.pexels.com/photos/162240/cow-cattle-farm-animal-162240.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+    </style>
+    <script src="scripts/auth.js"></script>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="bg-blue-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-cow text-2xl"></i>
+                <span class="text-xl font-bold">DairyFarm Pro</span>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <i class="fas fa-bell text-xl cursor-pointer"></i>
+                    <span class="absolute -top-1 -right-1 bg-yellow-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                </div>
+                <div class="h-8 w-8 bg-gray-300 rounded-full"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white w-64 shadow-md p-4">
+            <div class="space-y-1">
+                <a href="dashboard.html" class="flex items-center space-x-2 p-2 bg-blue-100 rounded-lg text-blue-800">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="feeding.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-utensils"></i>
+                    <span>Feeding</span>
+                </a>
+                <a href="vaccinations.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-syringe"></i>
+                    <span>Vaccinations</span>
+                </a>
+                <a href="history.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+                <a href="settings.html" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 p-8 dashboard-bg">
+            <h1 class="text-3xl font-bold text-blue-800 mb-6">Farm Overview</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Cattle Count Card -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-gray-500 text-sm">Total Cattle</h3>
+                            <p class="text-3xl font-bold">142</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-cow text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Tasks Card -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-gray-500 text-sm">Upcoming Tasks</h3>
+                            <p class="text-3xl font-bold">8</p>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <i class="fas fa-tasks text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity Card -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-gray-500 text-sm">Recent Activity</h3>
+                            <p class="text-3xl font-bold">24</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-history text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="feeding.html" class="bg-blue-50 hover:bg-blue-100 p-4 rounded-lg text-center transition">
+                        <i class="fas fa-utensils text-blue-600 text-2xl mb-2"></i>
+                        <p class="font-medium">Record Feeding</p>
+                    </a>
+                    <a href="vaccinations.html" class="bg-green-50 hover:bg-green-100 p-4 rounded-lg text-center transition">
+                        <i class="fas fa-syringe text-green-600 text-2xl mb-2"></i>
+                        <p class="font-medium">Add Vaccination</p>
+                    </a>
+                    <a href="#" class="bg-yellow-50 hover:bg-yellow-100 p-4 rounded-lg text-center transition">
+                        <i class="fas fa-calendar-plus text-yellow-600 text-2xl mb-2"></i>
+                        <p class="font-medium">Schedule Task</p>
+                    </a>
+                    <a href="#" class="bg-purple-50 hover:bg-purple-100 p-4 rounded-lg text-center transition">
+                        <i class="fas fa-chart-line text-purple-600 text-2xl mb-2"></i>
+                        <p class="font-medium">View Reports</p>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Recent Activity Table -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">Recent Activity</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activity</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cattle ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Today, 08:30</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Feeding</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">DF-0142</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20kg of Alfalfa</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Yesterday, 16:45</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Vaccination</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">DF-0038</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Brucellosis vaccine</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Yesterday, 10:15</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Health Check</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">DF-0092</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Normal temperature</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
